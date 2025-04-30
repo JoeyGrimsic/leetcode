@@ -1,0 +1,8 @@
+so we want to determine a valid sudoku?
+brute force: we could initialize vectors to hold column information and we are already given row vectors. then make vectors for each 3x3 block and with all of this information we can simply count and see if any numbers are found more than once in any of the rows columns or blocks.
+
+nuanced: maybe we can recursively solve this problem? i thought it may be useful to check each cell, moving across the sudoku and checking the numbers row column and block, but it must be faster to group these into vectors instead.
+
+nuanced: of course we could also just do loops over each row column and block and not create any vectors, and if the loop counts a duplicate then the board is not valid.
+
+i will go with my third idea, returning early if a duplicate is detected.
