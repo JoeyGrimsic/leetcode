@@ -1,15 +1,26 @@
+#include <array>
 #include <vector>
-#include <unordered_map>
 
 class Solution {
 public:
   bool isValidSudoku(std::vector<std::vector<char>> &board) {
-    for (int i = 0; i < 9; i ++) {
-      for (int j = 0; j < 9; j++){
-        // i am used to writing constructors for heap allocation in java but it may be unecessary to do so unless the data structure will be used at mass, in which case you would use a constructor, preceded by a unique pointer as per cpp standard practice.
-        std::unordered_map<char, int> frequency;
-        frequency[board[i][j]]++;
+    std::array<std::array<bool, 9>, 9> rows = {{}};
+    std::array<std::array<bool, 9>, 9> cols = {{}};
+    std::array<std::array<bool, 9>, 9> boxes = {{}};
+    for (int r = 0; r < 9; r++) {
+      for (int c = 0; c < 9; c++) {
+        char cell = board[r][c];
+        if (cell == '.')
+          continue;
+        int k = cell - '1'; // mapping to array bitmask
+        int b = r / 3 * 3 + c / 3;
+        if (rows[r][k] || cols[c][k] || boxes[b][k])
+          return false;
+        rows[r][k] = true;
+        cols[c][k] = true;
+        boxes[b][k] = true;
       }
     }
+    return true;
   }
 };
